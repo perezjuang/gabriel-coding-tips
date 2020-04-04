@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -39,8 +40,10 @@ public class EmployeeControllerIntegrationTests
 	@Test
 	public void testAddEmployee() {
 		Employee employee = new Employee("Lokesh", "Gupta", "howtodoinjava@gmail.com");
+		
 		ResponseEntity<String> responseEntity = this.restTemplate
 			.postForEntity("http://localhost:" + port + "/employees", employee, String.class);
+
 		assertEquals(201, responseEntity.getStatusCodeValue());
 	}
 }
