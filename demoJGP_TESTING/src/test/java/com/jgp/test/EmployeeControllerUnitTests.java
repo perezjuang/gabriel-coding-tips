@@ -39,10 +39,12 @@ public class EmployeeControllerUnitTests
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 		
 		Employee employee = new Employee();
-		employee.setId(1);
+		
+		employee.setId((long) 1);
+		
 		when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
 		
-		Employee employeeToAdd = new Employee("Lokesh", "Gupta", "howtodoinjava@gmail.com");
+		Employee employeeToAdd = new Employee(0,"Lokesh", "Gupta", "howtodoinjava@gmail.com");
 		ResponseEntity<Object> responseEntity = employeeController.addEmployee(employeeToAdd);
 		
 		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
@@ -53,8 +55,8 @@ public class EmployeeControllerUnitTests
 	public void testFindAll() 
 	{
 		// given
-		Employee employee1 = new Employee("Lokesh", "Gupta", "howtodoinjava@gmail.com");
-		Employee employee2 = new Employee("Alex", "Gussin", "example@gmail.com");
+		Employee employee1 = new Employee(0,"Lokesh", "Gupta", "howtodoinjava@gmail.com");
+		Employee employee2 = new Employee(1,"Alex", "Gussin", "example@gmail.com");
 		List<Employee> list = new ArrayList<Employee>();
 		list.addAll(Arrays.asList(employee1, employee2));
 

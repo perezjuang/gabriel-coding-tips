@@ -31,18 +31,19 @@ public class EmployeeControllerIntegrationTests
 	@Test
 	public void testAllEmployees() 
 	{
+		
 		assertTrue(
 				this.restTemplate
-					.getForObject("http://localhost:" + port + "/employees", Employees.class)
+					.getForObject("http://localhost:" + port + "/employeeAPI/employees", Employees.class)
 					.getEmployeeList().size() == 3);
 	}
 
 	@Test
 	public void testAddEmployee() {
-		Employee employee = new Employee("Lokesh", "Gupta", "howtodoinjava@gmail.com");
+		Employee employee = new Employee(0,"Lokesh", "Gupta", "howtodoinjava@gmail.com");
 		
 		ResponseEntity<String> responseEntity = this.restTemplate
-			.postForEntity("http://localhost:" + port + "/employees", employee, String.class);
+			.postForEntity("http://localhost:" + port + "/employeeAPI/employees", employee, String.class);
 
 		assertEquals(201, responseEntity.getStatusCodeValue());
 	}

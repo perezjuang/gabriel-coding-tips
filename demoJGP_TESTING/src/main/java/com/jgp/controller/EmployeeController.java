@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,13 +23,50 @@ import com.jgp.entity.Employees;
 import com.jgp.repository.EmployeeRepository;
 
 @RestController
-@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping(path="/employeeAPI")
 public class EmployeeController 
 {
 	@Autowired
     private EmployeeRepository employeeRepository;
 
-	
+    //***Api Final Front
+    @PostMapping(path= "/addemployee", consumes = "application/json", produces = "application/json")
+	public Employee addNewEmployeeApi(@RequestBody Employee employee) {
+        //add resource
+     	employee = employeeRepository.save(employee);
+		return employee;
+	}
+    
+    //***Api Final Para FRONT
+    @GetMapping(path= "/employeegetall", produces = "application/json")
+    public Employees getAllEmployeesApi() 
+    {
+		Employees response = new Employees();
+		ArrayList<Employee> list = new ArrayList<>();
+		employeeRepository.findAll().forEach(e -> list.add(e));
+		response.setEmployeeList(list);
+        return response;
+    }
+       
+    //***Api Final Front
+    @PostMapping(path= "/updateemployee", consumes = "application/json", produces = "application/json")
+	public Employee saveEmployeeApi(@RequestBody Employee employee) {
+        //add resource
+     	employeeRepository.save(employee);
+		return employee;
+	}
+    //***Api Final Front
+	@PostMapping(path = "/employeeremove", consumes = "application/json")
+	public @ResponseBody ResponseEntity<String> deleteEmployeeApi(@RequestBody Employee employe) {
+		employeeRepository.deleteById(employe.getId());
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+    
+    
+    
+    
+    
 	
 	/* Otras Formas  pero Bajo jUnit Testing*/
 	@GetMapping(path="/employees", produces = "application/json")
@@ -51,10 +90,11 @@ public class EmployeeController
                                     .path("/{id}")
                                     .buildAndExpand(employee.getId())
                                     .toUri();
-        
+
         //Send location in response
         return ResponseEntity.created(location).build();
     }
+   
     
     
 	/* Otras Formas  pero sin jUnit Testing*/   
@@ -66,7 +106,7 @@ public class EmployeeController
 
 	@GetMapping(path = "/addemployee")
 	public @ResponseBody String addNewEmployee(@RequestParam String ls_firstName, @RequestParam String ls_lastName, @RequestParam String ls_email) {
-       employeeRepository.save(new Employee(ls_firstName,ls_lastName,ls_email));
+       employeeRepository.save(new Employee((long)0,ls_firstName,ls_lastName,ls_email));
 		return "Saved";
 	}
 

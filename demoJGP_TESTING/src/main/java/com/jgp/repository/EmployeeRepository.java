@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jgp.entity.Employee;
 import java.util.List;
+
 @Repository
 public interface EmployeeRepository extends CrudRepository <Employee, Long> 
 {

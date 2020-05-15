@@ -9,25 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "tbl_employees")
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public Employee() {
-	}
-
-	public Employee(String firstName, String lastName, String email) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO)   * Otras BD
+	@GeneratedValue(  strategy= GenerationType.AUTO,   generator="native")
+	@GenericGenerator( name = "native",  strategy = "native"  )
 	@Column(name = "id")
-	private Integer id;
+	private long id;
 	
 	@Column(name = "firstName")
 	private String firstName;
@@ -38,11 +32,11 @@ public class Employee implements Serializable {
 	@Column(name = "email")
 	private String email;
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -70,8 +64,26 @@ public class Employee implements Serializable {
 		this.email = email;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
+
+	public Employee(long id, String firstName, String lastName, String email) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
 }
