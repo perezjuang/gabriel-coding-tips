@@ -59,10 +59,12 @@ pipeline {
             echo '====================================================='
             echo 'GENERATEARTIFACTS'
             echo '====================================================='
-git 'commit --allow-empty -m "Dummy commit"'
-git 'tag -a 1.0.0 -m "nothing here"'
-git 'push --tags origin master' // triggers both workflows
-
+          git 'commit --allow-empty -m "Dummy commit"'
+          git 'pull origin master'
+          git 'push origin master'
+          /* git 'tag -a 1.0.0 -m "nothing here"'
+          git 'push --tags origin master' // triggers both workflows*/
+          
          }
       }
       
