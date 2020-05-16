@@ -1,7 +1,7 @@
 
 node {
    stage('DEV-BACK-CLONE-GIT-DEV') { 
-        echo 'Hello WorldDEV'
+         git url: 'https://github.com/perezjuang/gabriel-coding-tips.git'
         // Tareas
    }
    stage('DEV-BACK-BUILD-PACK') { 
