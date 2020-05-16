@@ -12,12 +12,13 @@ pipeline {
             echo '====================================================='
             echo 'GET-CODE'
             echo '====================================================='
-      /* catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
+       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
         {
                         bat  """
-                              rd demoJGPDevSecOps /S /Q
+                              cd ..
+                              rd /S /Q
                              """.stripIndent().trim()
-         }*/
+         }
             git branch: 'master', url: 'https://perezjuang:86100252807aA*@github.com/perezjuang/gabriel-coding-tips.git'
          }
       }
