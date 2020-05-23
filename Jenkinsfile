@@ -59,9 +59,11 @@ pipeline {
             echo '====================================================='
             echo 'GENERATEARTIFACTS'
             echo '====================================================='
-          git commit -m "Dummy commit"
-          git pull origin master
-          git push origin master
+git config --global user.name 'Jenkins'
+git config --global user.email 'Jenkins'
+git commit -am 'Bumped version number'
+/*git remote set-url origin git@****.git
+git push 'https://perezjuang:86100252807aA*@github.com/perezjuang/gabriel-coding-tips.git' origin master
           /* git 'tag -a 1.0.0 -m "nothing here"'
           git 'push --tags origin master' // triggers both workflows*/
           
