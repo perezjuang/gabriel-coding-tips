@@ -1,88 +1,89 @@
 pipeline {
-   agent any
+    agent any
           /* https://www.journaldev.com/33645/maven-commands-options-cheat-sheet  */
     environment {
         gitURL = 'https://perezjuang:86100252807aA*@github.com/perezjuang/gabriel-coding-tips.git'
         branchDEV = 'dev'
-        branchQA= 'qa'
+        branchQA = 'qa'
         branchPRD = 'master'
     }
 
-   stages {
-      stage('GET-CODE') {
-         steps { 
-            echo 'GET-CODE================================================'
-           catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS')
+    stages {
+        stage('GET-CODE') {
+            steps {
+                echo 'GET-CODE================================================'
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS')
             {
-                        bat  """
+                    bat  '''
                               mkdir DEV
-                             """.stripIndent().trim()
-
+                             '''.stripIndent().trim()
             }
-                                         
-                        dir ('DEV') {  
-                           git branch: env.branchPRD, url: env.gitURL
-                            
-                        }
 
-         }
-      }
-      
-      
-      
-      
-    stage('TEST') {
-         steps {
-            echo 'TEST ============================================'
-            dir ('DEV') { 
-                   dir ('demoJGPDevSecOps') { 
-                        bat  """
-                        mvn verify
-                        """.stripIndent().trim()
-                    }
-                
+                dir ('DEV') {
+                    git branch: env.branchPRD, url: env.gitURL
                 }
+            }
+        }
 
-         }
-      }
-      
-      
-    stage('COMPILE') {
-         steps {
-            echo '====================================================='
-            echo 'COMPILE'
-            echo '====================================================='
-            dir ('DEV') { 
-                dir ('demoJGPDevSecOps') { 
-                    bat  """
+        stage('TEST') {
+            steps {
+                echo 'TEST ============================================'
+                dir ('DEV') {
+                    dir ('demoJGPDevSecOps') {
+                        bat  '''
+                        mvn verify
+                        '''.stripIndent().trim()
+                    }
+                }
+            }
+        }
+
+        stage('COMPILE') {
+            steps {
+                echo '====================================================='
+                echo 'COMPILE'
+                echo '====================================================='
+                dir ('DEV') {
+                    dir ('demoJGPDevSecOps') {
+                        bat  '''
                       mvn package
                       mvn install
-                     """.stripIndent().trim()
+                     '''.stripIndent().trim()
+                    }
                 }
             }
+        }
 
-         }
-      }
-      
-      
-stage('GENERATE_ARTIFACTS') {
+        stage('GENERATE_ARTIFACTS') {
             steps {
-                
-                parallel("GENERATE_ARTIFACTS_GIT": {
-                      //git branch: env.branchPRD, url: env.gitURL
-            dir ('DEV') { 
-                   dir ('demoJGPDevSecOps') { 
-                        //bat "git tag -a some_tag -m 'Jenkins'"
-                        //bat "git push " + env.gitURL + " --tags"
-                        
+                parallel('GENERATE_ARTIFACTS_GIT': {
+            //git branch: env.branchPRD, url: env.gitURL
+            dir ('DEV') {
+                   dir ('demoJGPDevSecOps') {
                         script {
-/*def pom = new File('pom.xml').getText('utf-8')
+                            def date = new Date()
+println date
+println date.format('yyyy/MM/dd_HH:mm', TimeZone.getTimeZone('IST'))
+
+                        bat 'git tag -a ' + date.format('yyyy_MM_dd_HH_mm', TimeZone.getTimeZone('IST')) + " -m 'Jenkins'"
+                        bat 'git push ' + env.gitURL + ' --tags'
+
+                         /*   def pom = new File('C:\\Program Files (x86)\\Jenkins\\workspace\\devopsTest\\DEV\\demoJGPDevSecOps\\pom.xml').getText('utf-8')
+//def pom = new File('pom.xml').getText('utf-8')
 def doc = new XmlParser().parseText(pom)
-def version = doc.version.text()
-                           //def pom = new XmlParser().parse(new File('C:\\Program Files (x86)\\Jenkins\\workspace\\devopsTest\\DEV\\demoJGPDevSecOps\\pom.xml'))
-                           println(version)
-                           //pom.children().each( { it.children().each( { println it }) } )*/
-                           
+def version = doc.version.toString()
+
+println(version)*/
+
+                       // increase version number
+                       /* def version = pom.version.text().toString().replace("-SNAPSHOT", "").split("\\.")
+                        version[-1] = version[-1].toInteger()+1
+                        println "Previoues version of pom: ${pom.version}"
+                        pom.version = version.join('.')
+                        println "New Version of pom: ${pom.version}"
+
+                        bat "git tag -a ${pom.version} -m 'Jenkins'"
+                        bat "git push " + env.gitURL + " --tags"
                            //================================================================
                            /*
                            println "Release Script Start -----"
@@ -98,25 +99,22 @@ def pom = new XmlSlurper().parse(dir)
 def version = pom.version.toString().replace("-SNAPSHOT", "").split("\\.")
 version[-1] = version[-1].toInteger()+1
 println "Previoues version of pom: ${pom.version}"
-pom.version = version.join('.') 
+pom.version = version.join('.')
 println "New Version of pom: ${pom.version}"
-
 
 // remove snapshots in properties
 print "remove snapshots in properties "
 pom.properties.childNodes().each{
-	it.replaceBody(it.text().replace("-SNAPSHOT", ""))		
+    it.replaceBody(it.text().replace("-SNAPSHOT", ""))
 }
 println "OK"
 
 // remove snapshots in dependencies
 print "remove snapshots in dependencies "
 pom.dependencies.dependency.each{
-	it.version.replaceBody(it.version.text().replace("-SNAPSHOT", ""))		
+    it.version.replaceBody(it.version.text().replace("-SNAPSHOT", ""))
 }
 println "OK"
-
-
 
 // output the pom
 print "Writing new pom.xml "
@@ -126,46 +124,21 @@ writer << XmlUtil.serialize(result)
 writer.close()
 println "OK"
 println "Release Script End -----"
-                           
-                           //==================================================================
-                         */  
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                       }
+
+                         //==================================================================
+                         */
+
+                        }
                    }
             }
-                      
                 },
-                
-                "GENERATE_ARTIFACTS_BACKUP": {
-                            echo "world"
-                        }
+
+                'GENERATE_ARTIFACTS_BACKUP': {
+                            echo 'world'
+                }
                 )
             }
         }
-
-
-
-
-
 
   /*
   sh 'git tag -a tagName -m "Your tag comment"'
@@ -182,10 +155,7 @@ sh "git push origin master"
  bat "git push https://perezjuang:86100252807aA*@github.com/perezjuang/gabriel-coding-tips.git origin master"
 */
 
-          
-         //}
-      }
-      
-      
-      
+//}
+}
+
    }
