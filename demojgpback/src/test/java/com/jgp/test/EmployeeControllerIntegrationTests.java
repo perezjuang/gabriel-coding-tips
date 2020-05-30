@@ -40,7 +40,7 @@ public class EmployeeControllerIntegrationTests
 
 	@Test
 	public void testAddEmployee() {
-		Employee employee = new Employee(0,"Lokesh", "Gupta", "howtodoinjava@gmail.com");
+		Employee employee = new Employee(1,"Lokesh", "Gupta", "abc@gmail.com");
 		
 		ResponseEntity<String> responseEntity = this.restTemplate
 			.postForEntity("http://localhost:" + port + "/employeeAPI/employees", employee, String.class);

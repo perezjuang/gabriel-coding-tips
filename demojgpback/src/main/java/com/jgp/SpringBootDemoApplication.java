@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan; 
 
 @SpringBootApplication 
-@ComponentScan(basePackages={"com.app"})
+@ComponentScan(basePackages={"com.jgp"})
 public class SpringBootDemoApplication {
 
     public static void main(String[] args) {
