@@ -1,6 +1,0 @@
-projectKey=KEY_demoJGP
-serverUrl=http://localhost:9008
-serverVersion=8.2.0.32929
-dashboardUrl=http://localhost:9008/dashboard?id=KEY_demoJGP
-ceTaskId=AXGNpYJJysEWC0ZEn6rC
-ceTaskUrl=http://localhost:9008/api/ce/task?id=AXGNpYJJysEWC0ZEn6rC
