@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "tbl_employees")
+@Table(name = "TBL_EMPLOYEES")
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 

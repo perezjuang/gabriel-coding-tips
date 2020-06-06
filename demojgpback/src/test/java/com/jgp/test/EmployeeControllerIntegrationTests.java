@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -21,7 +20,7 @@ import com.jgp.entity.Employees;
 		webEnvironment = WebEnvironment.RANDOM_PORT)
 public class EmployeeControllerIntegrationTests 
 {
-	@LocalServerPort
+	/* @LocalServerPort
 	private int port;
 
 	@Autowired
@@ -48,5 +47,5 @@ public class EmployeeControllerIntegrationTests
 		assertEquals(201, responseEntity.getStatusCodeValue());
 	}
 	
-	
+	*/
 }
