@@ -1,4 +1,4 @@
-package com.app;
+package com.app.sys.databaseloaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

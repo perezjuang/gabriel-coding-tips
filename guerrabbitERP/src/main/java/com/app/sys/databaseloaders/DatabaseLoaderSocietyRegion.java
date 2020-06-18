@@ -1,4 +1,4 @@
-package com.app;
+package com.app.sys.databaseloaders;
 
 import java.util.List;
 
@@ -29,29 +29,25 @@ public class DatabaseLoaderSocietyRegion implements CommandLineRunner {
 	
 		Society society = new Society();
 		society.setId(1);
-		society.setSociety_key("CAPACITACION");
 		society.setName("CAPACITACION");
 		society.setNit("9999999999");
 		society.setEnabled(true);
 		
 		this.societyrepository.save(society);
-		
-
 		society.setId(1);
 		
 		
 		Region region = new Region();
-		region.setSociety_id(society);
-		region.setRegion_id("FLORESTA");
-		region.setName("Floresta");
 		
+		region.setRegion_id("FLORESTA");
+		region.setName("Floresta");	
+		region.setSociety(society);
 		this.regionrepository.save(region);
 		
 		Region region2 = new Region();
-		region2.setSociety_id(society);
 		region2.setRegion_id("POBLADO");
 		region2.setName("POBLADO");
-		
+		region2.setSociety(society);
 		this.regionrepository.save(region2);
 		
 				
