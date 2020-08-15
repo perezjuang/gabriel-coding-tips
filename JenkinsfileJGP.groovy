@@ -58,7 +58,7 @@ pipeline {
         stage('GENERATE_ARTIFACTS') {
             steps {
                 parallel(
-                    a: 'GENERATE_ARTIFACTS_GIT' {
+                    'GENERATE_ARTIFACTS_GIT': {
                             //git branch: env.branchPRD, url: env.gitURL
                             dir ('DEV') {
                                 dir (env.projectName) {
@@ -74,7 +74,7 @@ pipeline {
                                 }
                             }
                 },
-                b: 'GENERATE_ARTIFACTS_BACKUP' {
+                'GENERATE_ARTIFACTS_BACKUP' {
                             echo 'world'
                 }
 
