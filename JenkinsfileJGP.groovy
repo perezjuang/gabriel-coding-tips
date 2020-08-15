@@ -65,7 +65,8 @@ pipeline {
                             def date = new Date()
                             println date
                              println date.format('yyyy/MM/dd_HH:mm', TimeZone.getTimeZone('IST'))
-
+                        bat 'git config --global user.email "perezjuang@hotmail.com"'
+                        bat 'git config --global user.name "perezjuang"'
                         bat 'git tag -a ' + date.format('yyyy_MM_dd_HH_mm', TimeZone.getTimeZone('IST')) + " -m 'Jenkins'"
                         bat 'git push ' + env.gitURL + ' --tags'
 
