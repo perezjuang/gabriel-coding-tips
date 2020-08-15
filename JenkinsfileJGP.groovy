@@ -1,47 +1,6 @@
-node {
-
-    stage('Preparation') { // for display purposes
-
-    }
-    stage('Build') {
-     
-    }
-    stage('Results') {
-
-    }
-    stage('run-parallel-branches') {
-        steps {
-            parallel(
-            a: {
-                echo "This is branch a"
-            },
-            b: {
-                echo "This is branch b"
-            }
-            )
-        }
-}
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/* groovylint-disable-next-line CompileStatic 
 pipeline {
     agent any
-          /* https://www.journaldev.com/33645/maven-commands-options-cheat-sheet  
+          /* https://www.journaldev.com/33645/maven-commands-options-cheat-sheet  */
     environment {
         gitURL = 'https://perezjuang:86100252807aA*@github.com/perezjuang/gabriel-coding-tips.git'
         branchDEV = 'dev'
@@ -123,7 +82,7 @@ pipeline {
             }
         }
 
-
+/*
         stage('ACEPTED_FUNCTIONAL_AUTOMATICS_TEST') {
             steps {
                 parallel(
@@ -184,7 +143,6 @@ pipeline {
                 )
             }
 
-        }
+        }*/
     }
 }
-*//
