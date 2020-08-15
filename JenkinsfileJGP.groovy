@@ -1,6 +1,59 @@
 pipeline {
+    agent 'windows'
+
+    stages {
+        stage("build and deploy on Windows and Linux") {
+            parallel {
+                stage("windows") {
+                    agent {
+                        label "windows"
+                    }
+                    stages {
+                        stage("build") {
+                            steps {
+                          
+                            }
+                        }
+                        stage("deploy") {
+                            when {
+                       
+                            }
+                            steps {
+                            
+                            }
+                        }
+                    }
+                }
+
+                stage("linux") {
+                    agent {
+                        label "linux"
+                    }
+                    stages {
+                        stage("build") {
+                            steps {
+                             
+                            }
+                        }
+                        stage("deploy") {
+                             when {
+                              
+                             }
+                             steps {
+                          
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* groovylint-disable-next-line CompileStatic 
+pipeline {
     agent any
-          /* https://www.journaldev.com/33645/maven-commands-options-cheat-sheet  */
+          /* https://www.journaldev.com/33645/maven-commands-options-cheat-sheet  
     environment {
         gitURL = 'https://perezjuang:86100252807aA*@github.com/perezjuang/gabriel-coding-tips.git'
         branchDEV = 'dev'
@@ -56,8 +109,9 @@ pipeline {
         }
 
         stage('GENERATE_ARTIFACTS') {
-                parallel {
-                    stage('GENERATE_ARTIFACTS_GIT') {
+            steps {
+                parallel(
+                    a: 'GENERATE_ARTIFACTS_GIT' {
                             //git branch: env.branchPRD, url: env.gitURL
                             dir ('DEV') {
                                 dir (env.projectName) {
@@ -72,15 +126,16 @@ pipeline {
                             }
                                 }
                             }
-                        }
-                        stage('GENERATE_ARTIFACTS_BACKUP') {
-                                    echo 'world'
-                        }
-
+                },
+                b: 'GENERATE_ARTIFACTS_BACKUP' {
+                            echo 'world'
                 }
+
+                )
+            }
         }
 
-/*
+
         stage('ACEPTED_FUNCTIONAL_AUTOMATICS_TEST') {
             steps {
                 parallel(
@@ -141,6 +196,7 @@ pipeline {
                 )
             }
 
-        }*/
+        }
     }
 }
+*//
