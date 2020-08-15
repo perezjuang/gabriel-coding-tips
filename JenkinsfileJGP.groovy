@@ -181,11 +181,15 @@ println "Release Script End -----"
         stage('DESPLOY_MANUAL_CHECK APROBACION') {
             steps {
                 parallel('CHECK_APPROVER1': {
-                        input("Listo para el Despliegue?")
+                       timeout(time: 2, unit: “HOURS”) {
+    input message: 'Approve Deploy?', ok: 'Yes'
+}
                 },
 
                 'CHECK_APPROVER2': {
-                           input("Listo para el Despliegue?")
+                          timeout(time: 2, unit: “HOURS”) {
+    input message: 'Approve Deploy?', ok: 'Yes'
+}
                 }
 
                 )
@@ -196,10 +200,9 @@ println "Release Script End -----"
                 parallel('NODE1_DOCKER': {
 
                 },
-
                 'NODE2_DOCKER': {
                             echo 'world'
-                }
+                },
                 'NODE3_DOCKER': {
                             echo 'world'
                 }
