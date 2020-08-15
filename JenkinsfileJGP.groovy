@@ -56,7 +56,7 @@ pipeline {
         }
 
         stage('GENERATE_ARTIFACTS') {
-                parallel(
+                parallel {
                     stage('GENERATE_ARTIFACTS_GIT') {
                             //git branch: env.branchPRD, url: env.gitURL
                             dir ('DEV') {
@@ -72,12 +72,12 @@ pipeline {
                             }
                                 }
                             }
-                },
-                stage('GENERATE_ARTIFACTS_BACKUP') {
-                            echo 'world'
-                }
+                        }
+                        stage('GENERATE_ARTIFACTS_BACKUP') {
+                                    echo 'world'
+                        }
 
-                )
+                }
         }
 
 /*
