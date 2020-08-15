@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage('TEST') {
+        stage('TEST_UNIT') {
             steps {
                 echo 'TEST ============================================'
                 dir ('DEV') {
@@ -54,6 +54,11 @@ pipeline {
                 }
             }
         }
+
+
+
+
+
 
         stage('GENERATE_ARTIFACTS') {
             steps {
@@ -138,9 +143,78 @@ println "Release Script End -----"
                 'GENERATE_ARTIFACTS_BACKUP': {
                             echo 'world'
                 }
+
                 )
             }
         }
+
+
+
+
+        stage('ACEPTED_FUNCTIONAL_AUTOMATICS_TEST') {
+            steps {
+                parallel('RUN_CUCUMBER_SELENIUM': {
+
+                },
+
+                'GENERATE_METRICS': {
+                            echo 'world'
+                }
+
+                )
+            }
+        }
+
+        stage('DESPLOY_TEST_ENVIROMENT') {
+            steps {
+                parallel('DEV': {
+
+                },
+
+                'QA': {
+                            echo 'world'
+                }
+
+                )
+            }
+        }
+        stage('DESPLOY_MANUAL_CHECK APROBACION') {
+            steps {
+                parallel('CHECK_APPROVER1': {
+                        input("Listo para el Despliegue?")
+                },
+
+                'CHECK_APPROVER2': {
+                           input("Listo para el Despliegue?")
+                }
+
+                )
+            }
+        }        
+        stage('DESPLOY_PRODUCTION_ENVIROMENT') {
+            steps {
+                parallel('NODE1_DOCKER': {
+
+                },
+
+                'NODE2_DOCKER': {
+                            echo 'world'
+                }
+                'NODE3_DOCKER': {
+                            echo 'world'
+                }
+
+                )
+            }
+        }
+
+
+
+
+
+
+
+
 
   /*
   sh 'git tag -a tagName -m "Your tag comment"'
