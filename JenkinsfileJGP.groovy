@@ -83,7 +83,6 @@ pipeline {
             }
         }
 
-
         stage('ACEPTED_FUNCTIONAL_AUTOMATICS_TEST') {
             steps {
                 parallel(
@@ -143,7 +142,7 @@ pipeline {
                 )
             }
         }
-		
+
         stage('DESPLOY_PRODUCTION_ENVIROMENT') {
             steps {
                 parallel('NODE1_DOCKER': {
@@ -157,7 +156,8 @@ pipeline {
                 }
 
                 )
-        }
+            }
 
+        }
     }
 }
