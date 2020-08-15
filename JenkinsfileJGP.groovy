@@ -56,7 +56,6 @@ pipeline {
         }
 
         stage('GENERATE_ARTIFACTS') {
-            steps {
                 parallel(
                     stage('GENERATE_ARTIFACTS_GIT') {
                             //git branch: env.branchPRD, url: env.gitURL
@@ -79,7 +78,6 @@ pipeline {
                 }
 
                 )
-            }
         }
 
 /*
