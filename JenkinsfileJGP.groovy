@@ -59,7 +59,7 @@ pipeline {
         stage('GENERATE_ARTIFACTS') {
             steps {
                 parallel(
-                    'GENERATE_ARTIFACTS_GIT' {
+                    a: 'GENERATE_ARTIFACTS_GIT' {
                             //git branch: env.branchPRD, url: env.gitURL
                             dir ('DEV') {
                                 dir (env.projectName) {
@@ -75,7 +75,7 @@ pipeline {
                                 }
                             }
                 },
-                'GENERATE_ARTIFACTS_BACKUP': {
+                b: 'GENERATE_ARTIFACTS_BACKUP' {
                             echo 'world'
                 }
 
@@ -87,11 +87,11 @@ pipeline {
         stage('ACEPTED_FUNCTIONAL_AUTOMATICS_TEST') {
             steps {
                 parallel(
-                    'RUN_CUCUMBER_SELENIUM': {
+                a: 'RUN_CUCUMBER_SELENIUM' {
 
                 },
 
-                'GENERATE_METRICS': {
+                b: 'GENERATE_METRICS' {
                             echo 'world'
                 }
 
@@ -101,10 +101,10 @@ pipeline {
 
         stage('DESPLOY_TEST_ENVIROMENT') {
             steps {
-                parallel('DEV': {
+                parallel(a: 'DEV' {
 
                 },
-                'QA': {
+                b: 'QA' {
                             echo 'world'
                 }
 
@@ -113,13 +113,13 @@ pipeline {
         }
         stage('DESPLOY_MANUAL_CHECK APROBACION') {
             steps {
-                parallel('CHECK_APPROVER1': {
+                parallel(a: 'CHECK_APPROVER1' {
                        timeout(time: 2, unit: 'HOURS') {
                         input message: 'Approve Deploy?', ok: 'Yes'
                        }
                 },
 
-                'CHECK_APPROVER2': {
+                b: 'CHECK_APPROVER2' {
                           timeout(time: 2, unit: 'HOURS') {
                             input message: 'Approve Deploy?', ok: 'Yes'
                           }
@@ -131,13 +131,13 @@ pipeline {
 
         stage('DESPLOY_PRODUCTION_ENVIROMENT') {
             steps {
-                parallel('NODE1_DOCKER': {
+                parallel(a: 'NODE1_DOCKER' {
 
                 },
-                'NODE2_DOCKER': {
+                b: 'NODE2_DOCKER' {
                             echo 'world'
                 },
-                'NODE3_DOCKER': {
+                 a: 'NODE3_DOCKER' {
                             echo 'world'
                 }
 
