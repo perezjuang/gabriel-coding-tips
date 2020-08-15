@@ -1,7 +1,55 @@
-/* groovylint-disable-next-line CompileStatic */
+pipeline {
+    agent none
+    stages {
+        stage('Run Tests') {
+            parallel {
+                stage('Test On Windows') {
+                    agent {
+                        label "windows"
+                    }
+                    steps {
+                        bat "run-tests.bat"
+                    }
+                    post {
+                        always {
+                            junit "**/TEST-*.xml"
+                        }
+                    }
+                }
+                stage('Test On Linux') {
+                    agent {
+                        label "linux"
+                    }
+                    steps {
+                        sh "run-tests.sh"
+                    }
+                    post {
+                        always {
+                            junit "**/TEST-*.xml"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* groovylint-disable-next-line CompileStatic 
 pipeline {
     agent any
-          /* https://www.journaldev.com/33645/maven-commands-options-cheat-sheet  */
+          /* https://www.journaldev.com/33645/maven-commands-options-cheat-sheet  
     environment {
         gitURL = 'https://perezjuang:86100252807aA*@github.com/perezjuang/gabriel-coding-tips.git'
         branchDEV = 'dev'
@@ -147,3 +195,4 @@ pipeline {
         }
     }
 }
+*//
