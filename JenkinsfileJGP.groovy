@@ -83,20 +83,6 @@ pipeline {
             }
         }
 
-        stage('ACEPTED_FUNCTIONAL_AUTOMATICS_TEST') {
-            steps {
-                parallel(
-                    'RUN_CUCUMBER_SELENIUM': {
-
-                },
-
-                'GENERATE_METRICS': {
-                            echo 'world'
-                }
-
-                )
-            }
-        }
 
         stage('ACEPTED_FUNCTIONAL_AUTOMATICS_TEST') {
             steps {
@@ -128,13 +114,13 @@ pipeline {
         stage('DESPLOY_MANUAL_CHECK APROBACION') {
             steps {
                 parallel('CHECK_APPROVER1': {
-                       timeout(time: 2, unit: “HOURS”) {
+                       timeout(time: 2, unit: 'HOURS') {
                         input message: 'Approve Deploy?', ok: 'Yes'
                        }
                 },
 
                 'CHECK_APPROVER2': {
-                          timeout(time: 2, unit: “HOURS”) {
+                          timeout(time: 2, unit: 'HOURS') {
                             input message: 'Approve Deploy?', ok: 'Yes'
                           }
                 }
