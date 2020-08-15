@@ -87,11 +87,11 @@ pipeline {
         stage('ACEPTED_FUNCTIONAL_AUTOMATICS_TEST') {
             steps {
                 parallel(
-                a: 'RUN_CUCUMBER_SELENIUM' {
+                c: 'RUN_CUCUMBER_SELENIUM' {
 
                 },
 
-                b: 'GENERATE_METRICS' {
+                d: 'GENERATE_METRICS' {
                             echo 'world'
                 }
 
@@ -101,10 +101,10 @@ pipeline {
 
         stage('DESPLOY_TEST_ENVIROMENT') {
             steps {
-                parallel(a: 'DEV' {
+                parallel(e: 'DEV' {
 
                 },
-                b: 'QA' {
+                f: 'QA' {
                             echo 'world'
                 }
 
@@ -113,13 +113,13 @@ pipeline {
         }
         stage('DESPLOY_MANUAL_CHECK APROBACION') {
             steps {
-                parallel(a: 'CHECK_APPROVER1' {
+                parallel(g: 'CHECK_APPROVER1' {
                        timeout(time: 2, unit: 'HOURS') {
                         input message: 'Approve Deploy?', ok: 'Yes'
                        }
                 },
 
-                b: 'CHECK_APPROVER2' {
+                h: 'CHECK_APPROVER2' {
                           timeout(time: 2, unit: 'HOURS') {
                             input message: 'Approve Deploy?', ok: 'Yes'
                           }
@@ -134,10 +134,10 @@ pipeline {
                 parallel(a: 'NODE1_DOCKER' {
 
                 },
-                b: 'NODE2_DOCKER' {
+                i: 'NODE2_DOCKER' {
                             echo 'world'
                 },
-                 a: 'NODE3_DOCKER' {
+                 j: 'NODE3_DOCKER' {
                             echo 'world'
                 }
 
