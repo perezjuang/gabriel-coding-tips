@@ -6,6 +6,7 @@ pipeline {
         branchDEV = 'dev'
         branchQA = 'qa'
         branchPRD = 'master'
+        projectName= 'demojgpback'
     }
 
     stages {
@@ -29,7 +30,7 @@ pipeline {
             steps {
                 echo 'TEST ============================================'
                 dir ('DEV') {
-                    dir ('demoJGPDevSecOps') {
+                    dir (env.projectName) {
                         bat  '''
                         mvn verify
                         '''.stripIndent().trim()
@@ -44,7 +45,7 @@ pipeline {
                 echo 'COMPILE'
                 echo '====================================================='
                 dir ('DEV') {
-                    dir ('demoJGPDevSecOps') {
+                    dir (env.projectName) {
                         bat  '''
                       mvn package
                       mvn install
@@ -59,11 +60,11 @@ pipeline {
                 parallel('GENERATE_ARTIFACTS_GIT': {
             //git branch: env.branchPRD, url: env.gitURL
             dir ('DEV') {
-                   dir ('demoJGPDevSecOps') {
+                   dir (env.projectName) {
                         script {
                             def date = new Date()
-println date
-println date.format('yyyy/MM/dd_HH:mm', TimeZone.getTimeZone('IST'))
+                            println date
+                             println date.format('yyyy/MM/dd_HH:mm', TimeZone.getTimeZone('IST'))
 
                         bat 'git tag -a ' + date.format('yyyy_MM_dd_HH_mm', TimeZone.getTimeZone('IST')) + " -m 'Jenkins'"
                         bat 'git push ' + env.gitURL + ' --tags'
