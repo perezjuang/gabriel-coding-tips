@@ -13,7 +13,7 @@ const Employee = () => {
   ];
   const [employees, setEmployees] = useState(EmployeeData);
   const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = "http://localhost:8282/employeeAPI/";
+  const apiUrl = "http://localhost:8282/api/employeeCustomAPI";
 
   useEffect(() => {
     const fetchData = async () => {
