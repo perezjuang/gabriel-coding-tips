@@ -1,2 +1,0 @@
-# hygieia-example-app
-
