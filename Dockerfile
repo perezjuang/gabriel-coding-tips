@@ -19,3 +19,28 @@ EXPOSE 8189
 ARG JAR_FILE=/demojgpback/target/demoBack-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
+
+
+#FROM openjdk:11
+#COPY . /usr/src/myapp
+#WORKDIR /usr/src/myapp
+#RUN javac Main.java
+#CMD ["java", "Main"]
+#You can then run and build the Docker image:
+
+#$ docker build -t my-java-app .
+#$ docker run -it --rm --name my-running-app my-java-app
+
+
+
+
+
+
+
+#FROM openjdk:11
+#COPY . /usr/src/myapp
+#WORKDIR /usr/src/myapp
+#RUN javac Hello.java
+#CMD ["java", "Hello"]
+#docker build -t img-java-example .
+#docker run -it --rm img-java-example
