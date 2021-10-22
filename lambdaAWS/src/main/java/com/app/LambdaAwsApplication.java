@@ -18,4 +18,10 @@ public class LambdaAwsApplication {
 		return value -> value.toUpperCase();
 	}
 
+	
+	@Bean
+    public Function<String, Boolean> containsCloud() {
+        return value -> value.contains("cloud");
+    }
+	
 }
